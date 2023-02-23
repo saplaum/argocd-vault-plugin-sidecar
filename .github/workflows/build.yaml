@@ -28,6 +28,13 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Log in to the Docker container registry 🔒 
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Extract metadata (tags, labels) for Docker  📝
         id: meta
@@ -35,6 +42,7 @@ jobs:
         with:
           images: |
             ghcr.io/${{ github.repository }}
+            plaums/argocd-vault-plugin-sidecar
           tags: |
             type=schedule
             type=ref,event=branch
