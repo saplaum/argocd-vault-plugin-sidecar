@@ -10,6 +10,8 @@ RUN curl -L -o ${BIN} https://github.com/argoproj-labs/argocd-vault-plugin/relea
 RUN chmod +x ${BIN}
 RUN mv ${BIN} /usr/local/bin
 RUN mkdir /.aws
+RUN chown 999:999 /.aws
+RUN chmod 755 /.aws
 
 WORKDIR /home/argocd/cmp-server/config/
 COPY plugin.yaml ./
